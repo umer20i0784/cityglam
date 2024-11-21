@@ -1,0 +1,2133 @@
+<!doctype html>
+<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr"
+      data-theme="theme-default" data-assets-path="@{/assets/}" data-template="vertical-menu-template" data-style="light">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+
+    <title>Dashboard-Admin</title>
+
+    <meta name="description" content=""/>
+
+    <!-- Favicon -->
+    <!--    <link rel="icon" type="image/x-icon" th:href="@{/assets/img/favicon/favicon.ico}"/>-->
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+
+    <!-- Icons -->
+    <link rel="stylesheet" th:href="@{/assets/vendor/fonts/fontawesome.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/vendor/fonts/tabler-icons.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/vendor/fonts/flag-icons.css}"/>
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" th:href="@{/assets/vendor/css/rtl/core.css}" class="template-customizer-core-css"/>
+    <link rel="stylesheet" th:href="@{/assets/vendor/css/rtl/theme-default.css}" class="template-customizer-theme-css"/>
+    <link rel="stylesheet" th:href="@{/assets/css/demo.css}"/>
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" th:href="@{/assets/vendor/libs/node-waves/node-waves.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/vendor/libs/typeahead-js/typeahead.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/vendor/libs/apex-charts/apex-charts.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css}"/>
+    <link rel="stylesheet" th:href="@{/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css}"/>
+
+    <!-- Page CSS -->
+
+    <!-- Helpers -->
+    <script th:src="@{/assets/vendor/js/helpers.js}"></script>
+
+    <!-- Config -->
+    <script th:src="@{/assets/js/config.js}"></script>
+</head>
+
+<body>
+
+<meta name="_csrf" th:content="${_csrf.token}"/>
+<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+
+<!-- Layout wrapper -->
+<div class="layout-wrapper layout-content-navbar">
+    <div class="layout-container">
+        <!-- Menu -->
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+            <div class="app-brand demo">
+                <a th:href="@{/dashboard}" class="app-brand-link">
+<!--                    <span class="app-brand-logo demo">-->
+<!--                        <svg width="32" height="22" viewBox="0 0 32 22" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0.00172773 0V6.85398C0.00172773 6.85398 -0.133178 9.01207 1.98092 10.8388L13.6912 21.9964L19.7809 21.9181L18.8042 9.88248L16.4951 7.17289L9.23799 0H0.00172773Z" fill="#7367F0"/>-->
+<!--                            <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd" d="M7.69824 16.4364L12.5199 3.23696L16.5541 7.25596L7.69824 16.4364Z" fill="#161616"/>-->
+<!--                            <path opacity="0.06" fill-rule="evenodd" clip-rule="evenodd" d="M8.07751 15.9175L13.9419 4.63989L16.5849 7.28475L8.07751 15.9175Z" fill="#161616"/>-->
+<!--                            <path fill-rule="evenodd" clip-rule="evenodd" d="M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z" fill="#7367F0"/>-->
+<!--                        </svg>-->
+<!--                    </span>-->
+                    <span class="app-brand-text demo menu-text fw-bold">Dashboard</span>
+                </a>
+                <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+                    <i class="ti menu-toggle-icon d-none d-xl-block align-middle"></i>
+                    <i class="ti ti-x d-block d-xl-none ti-md align-middle"></i>
+                </a>
+            </div>
+
+            <div class="menu-inner-shadow"></div>
+
+            <ul class="menu-inner py-1">
+                <!-- Apps & Pages -->
+                <li class="menu-header small">
+                    <span class="menu-header-text" data-i18n="Apps & Pages">System Settings</span>
+                </li>
+                <!-- Coverage Settings -->
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons ti ti-map"></i>
+                        <div>Coverage Settings</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="javascript:void(0);" class="menu-link" onclick="showCountryTable()">
+                                <div>Country</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="javascript:void(0);" class="menu-link" onclick="showRegionTable()">
+                                <div>Region/State</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="javascript:void(0);" class="menu-link" onclick="showLgaProvinceTable()">
+                                <div>LGA/Province</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="javascript:void(0);" class="menu-link" onclick="showCommunityDistrictTable()">
+                                <div>Community/District</div>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                <!-- Category Settings -->
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link" onclick="showCategoryTable()">
+                        <i class="menu-icon tf-icons ti ti-list"></i>
+                        <div>Category Settings</div>
+                    </a>
+                </li>
+                <!-- User Management -->
+                <li class="menu-header small">
+                    <span class="menu-header-text">User Management</span>
+                </li>
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons ti ti-users"></i>
+                        <div>User Directory</div>
+                    </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="javascript:void(0);" class="menu-link" onclick="showUserTable('ROOT_CA')">
+                                <div>Central Administrator</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="javascript:void(0);" class="menu-link" onclick="showUserTable('MANAGER')">
+                                <div>Managers</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="javascript:void(0);" class="menu-link" onclick="showUserTable('MEMBER')">
+                                <div>Members</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </aside>
+        <!-- / Menu -->
+
+        <div class="layout-wrapper layout-content-navbar">
+            <div class="layout-container">
+                >
+
+                <!-- Layout container -->
+                <div class="layout-page">
+
+
+                    <!-- / Navbar -->
+
+                    <!-- Content wrapper -->
+                    <div class="content-wrapper">
+                        <!-- Content -->
+
+                        <div class="container-xxl flex-grow-1 container-p-y" id="category-table-section" style="display: none;">
+                            <div class="card">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h5 class="mb-0">Manage Categories</h5>
+                                    <button class="btn btn-primary btn-sm" onclick="showAddCategoryModal()">+ Add New Category</button>
+                                </div>
+                                <div class="card-datatable text-nowrap">
+                                    <table class="dt-scrollableTable table">
+                                        <thead>
+                                        <tr>
+                                            <th>Category Name</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="category-table-body">
+                                        <!-- Rows will be dynamically populated -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Add/Edit Category Modal -->
+                        <div class="modal fade" id="addEditCategoryModal" tabindex="-1" aria-labelledby="addEditCategoryModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addEditCategoryModalLabel">Add/Edit Category</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="add-edit-category-form">
+                                            <input type="hidden" id="category-id" />
+                                            <div class="mb-3">
+                                                <label for="category-name" class="form-label">Category Name</label>
+                                                <input type="text" class="form-control" id="category-name" required />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="category-status" class="form-label">Status</label>
+                                                <select class="form-select" id="category-status" required>
+                                                    <option value="ACTIVE">Active</option>
+                                                    <option value="SUSPENDED">Suspended</option>
+                                                    <option value="CANCELLED">Cancelled</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="category-logo" class="form-label">Logo URL</label>
+                                                <input type="text" class="form-control" id="category-logo" />
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="container-xxl flex-grow-1 container-p-y" id="user-table-section" style="display: none;">
+                            <div class="card">
+                                <h5 class="card-header">User Listing</h5>
+                                <div class="card-datatable text-nowrap">
+                                    <table class="dt-scrollableTable table">
+                                        <thead>
+                                        <tr>
+                                            <th>Email</th>
+                                            <th>Group</th>
+                                            <th>Mobile No</th>
+                                            <th>Coverage</th>
+                                            <th>Location</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="user-table-body">
+                                        <!-- Rows populated dynamically -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="container-xxl flex-grow-1 container-p-y" id="country-table-section" style="display: none;">
+                            <!-- Scrollable -->
+                            <div class="card">
+                                <h5 class="card-header d-flex justify-content-between">
+                                    Manage Countries
+                                    <button class="btn btn-primary btn-sm" id="add-country-btn">
+                                        <i class="ti ti-plus"></i> Add Country
+                                    </button>
+                                </h5>
+                                <div class="card-datatable text-nowrap">
+                                    <table class="dt-scrollableTable table" >
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Country Code</th>
+                                            <th>Country Name</th>
+                                            <th>Currency ISO Code</th>
+                                            <th>ISO Code</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="country-table-body">
+                                        <!-- Rows will be populated here dynamically -->
+                                        </tbody>
+                                    </table>
+                                    <div class="pagination">
+                                        <button id="prev-page" class="btn btn-sm btn-secondary">Previous</button>
+                                        <span id="page-info">Page 1</span>
+                                        <button id="next-page" class="btn btn-sm btn-secondary">Next</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+
+                        <div class="container-xxl flex-grow-1 container-p-y" id="region-table-section" style="display: none;">
+                            <div class="card">
+                                <h5 class="card-header d-flex justify-content-between">
+                                    Manage Regions
+                                    <button class="btn btn-primary btn-sm" id="add-region-btn">
+                                        <i class="ti ti-plus"></i> Add Region
+                                    </button>
+                                </h5>
+                                <div class="card-datatable text-nowrap">
+                                    <table class="dt-scrollableTable table">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Region Code</th>
+                                            <th>Region Name</th>
+                                            <th>Status</th>
+                                            <th>Country</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="region-table-body">
+                                        <!-- Rows will be populated here dynamically -->
+                                        </tbody>
+                                    </table>
+                                    <div class="pagination">
+                                        <button id="prev-region-page" class="btn btn-sm btn-secondary">Previous</button>
+                                        <span id="region-page-info">Page 1</span>
+                                        <button id="next-region-page" class="btn btn-sm btn-secondary">Next</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="container-xxl flex-grow-1 container-p-y" id="county-table-section" style="display: none;">
+                            <div class="card">
+                                <h5 class="card-header d-flex justify-content-between">
+                                    Manage Counties
+                                    <button class="btn btn-primary btn-sm" id="add-county-btn">
+                                        <i class="ti ti-plus"></i> Add County
+                                    </button>
+                                </h5>
+                                <div class="card-datatable text-nowrap">
+                                    <table class="dt-scrollableTable table">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>County Name</th>
+                                            <th>Status</th>
+                                            <th>Region</th>
+                                            <th>Country</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="county-table-body">
+                                        <!-- Rows will be populated here dynamically -->
+                                        </tbody>
+                                    </table>
+                                    <div class="pagination">
+                                        <button id="county-prev-page" class="btn btn-sm btn-secondary">Previous</button>
+                                        <span id="county-page-info">Page 1</span>
+                                        <button id="county-next-page" class="btn btn-sm btn-secondary">Next</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="container-xxl flex-grow-1 container-p-y" id="district-table-section" style="display: none;">
+                            <div class="card">
+                                <h5 class="card-header d-flex justify-content-between">
+                                    Manage Districts
+                                    <button class="btn btn-primary btn-sm" id="add-district-btn">
+                                        <i class="ti ti-plus"></i> Add District
+                                    </button>
+                                </h5>
+                                <div class="card-datatable text-nowrap">
+                                    <table class="dt-scrollableTable table">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>District Name</th>
+                                            <th>Status</th>
+                                            <th>County</th> <!-- Display County Name -->
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="district-table-body">
+                                        <!-- Rows will be populated dynamically -->
+                                        </tbody>
+                                    </table>
+                                    <div class="pagination">
+                                        <button id="prev-page-districts" class="btn btn-sm btn-secondary">Previous</button>
+                                        <span id="page-info-districts">Page 1</span>
+                                        <button id="next-page-districts" class="btn btn-sm btn-secondary">Next</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal for Editing District -->
+                        <div class="modal fade" id="editDistrictModal" tabindex="-1" aria-labelledby="editDistrictModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editDistrictModalLabel">Edit District</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="edit-district-form">
+                                            <div class="mb-3" style="display: none;">
+                                                <label for="edit-district-id" class="form-label">District ID</label>
+                                                <input type="text" class="form-control" id="edit-district-id" readonly>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="edit-district-name" class="form-label">District Name</label>
+                                                <input type="text" class="form-control" id="edit-district-name" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="edit-district-status" class="form-label">Status</label>
+                                                <select class="form-select" id="edit-district-status">
+                                                    <option value="active">Active</option>
+                                                    <option value="inactive">Inactive</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="edit-district-county" class="form-label">County</label>
+                                                <select class="form-select" id="edit-district-county" required>
+                                                    <!-- Options populated dynamically -->
+                                                </select>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="addCountryModal" tabindex="-1" aria-labelledby="addCountryModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addCountryModalLabel">Add Country</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="add-country-form">
+                                            <div class="mb-3">
+                                                <label for="add-country-name" class="form-label">Country Name</label>
+                                                <input type="text" class="form-control" id="add-country-name" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="add-country-code" class="form-label">Country Code</label>
+                                                <input type="text" class="form-control" id="add-country-code" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="add-country-currency-iso" class="form-label">Currency ISO Code</label>
+                                                <input type="text" class="form-control" id="add-country-currency-iso">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="add-country-iso" class="form-label">ISO Code</label>
+                                                <input type="text" class="form-control" id="add-country-iso">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="add-country-status" class="form-label">Status</label>
+                                                <select class="form-select" id="add-country-status">
+                                                    <option value="active">Active</option>
+                                                    <option value="inactive">Inactive</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="add-country-continent" class="form-label">Continent ID</label>
+                                                <input type="number" class="form-control" id="add-country-continent">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="add-country-image" class="form-label">Country Image</label>
+                                                <input type="text" class="form-control" id="add-country-image">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="add-country-currency-symbol" class="form-label">Currency Symbol</label>
+                                                <input type="text" class="form-control" id="add-country-currency-symbol">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="add-country-default" class="form-label">Default Country</label>
+                                                <select class="form-select" id="add-country-default">
+                                                    <option value="Y">Yes</option>
+                                                    <option value="N">No</option>
+                                                </select>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Add Country</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal for Edit -->
+                        <div class="modal fade" id="editCountyModal" tabindex="-1" aria-labelledby="editCountyModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editCountyModalLabel">Edit County</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="edit-county-form">
+                                            <div class="mb-3" style="display: none;">
+                                                <label for="edit-county-id" class="form-label">County ID</label>
+                                                <input type="text" class="form-control" id="edit-county-id" readonly>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="edit-county-name" class="form-label">County Name</label>
+                                                <input type="text" class="form-control" id="edit-county-name" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="edit-county-status" class="form-label">Status</label>
+                                                <select class="form-select" id="edit-county-status">
+                                                    <option value="active">Active</option>
+                                                    <option value="inactive">Inactive</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="edit-county-region" class="form-label">Region</label>
+                                                <select class="form-select" id="edit-county-region" required>
+                                                    <!-- Options populated dynamically -->
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="edit-county-country" class="form-label">Country</label>
+                                                <select class="form-select" id="edit-county-country" required>
+                                                    <!-- Options populated dynamically -->
+                                                </select>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="addCountyModal" tabindex="-1" aria-labelledby="addCountyModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addCountyModalLabel">Add County</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="add-county-form">
+                                            <!-- County Name -->
+                                            <div class="mb-3">
+                                                <label for="add-county-name" class="form-label">County Name</label>
+                                                <input type="text" class="form-control" id="add-county-name" required>
+                                            </div>
+
+                                            <!-- County Status -->
+                                            <div class="mb-3">
+                                                <label for="add-county-status" class="form-label">Status</label>
+                                                <select class="form-select" id="add-county-status" required>
+                                                    <option value="active">Active</option>
+                                                    <option value="inactive">Inactive</option>
+                                                </select>
+                                            </div>
+
+                                            <!-- Region Dropdown -->
+                                            <div class="mb-3">
+                                                <label for="add-county-region" class="form-label">Region</label>
+                                                <select class="form-select" id="add-county-region" required>
+                                                    <!-- Options will be populated dynamically -->
+                                                </select>
+                                            </div>
+
+                                            <!-- Country Dropdown -->
+                                            <div class="mb-3">
+                                                <label for="add-county-country" class="form-label">Country</label>
+                                                <select class="form-select" id="add-county-country" required>
+                                                    <!-- Options will be populated dynamically -->
+                                                </select>
+                                            </div>
+
+                                            <!-- Add County Button -->
+                                            <button type="submit" class="btn btn-primary">Add County</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Modal for Edit Region -->
+                        <div class="modal fade" id="editRegionModal" tabindex="-1" aria-labelledby="editRegionModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editRegionModalLabel">Edit Region</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="edit-region-form">
+                                            <!-- Hidden field for Region ID -->
+                                            <input type="hidden" id="edit-region-id">
+
+                                            <!-- Region Code -->
+                                            <div class="mb-3">
+                                                <label for="edit-region-code" class="form-label">Region Code</label>
+                                                <input type="text" class="form-control" id="edit-region-code" required>
+                                            </div>
+
+                                            <!-- Region Name -->
+                                            <div class="mb-3">
+                                                <label for="edit-region-name" class="form-label">Region Name</label>
+                                                <input type="text" class="form-control" id="edit-region-name" required>
+                                            </div>
+
+                                            <!-- Region Status -->
+                                            <div class="mb-3">
+                                                <label for="edit-region-status" class="form-label">Status</label>
+                                                <select class="form-select" id="edit-region-status" required>
+                                                    <option value="active">Active</option>
+                                                    <option value="inactive">Inactive</option>
+                                                </select>
+                                            </div>
+
+                                            <!-- Country Dropdown -->
+                                            <div class="mb-3">
+                                                <label for="edit-region-country" class="form-label">Country</label>
+                                                <select class="form-select" id="edit-region-country" required>
+                                                    <!-- Options will be populated dynamically -->
+                                                </select>
+                                            </div>
+
+                                            <!-- Save Changes Button -->
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="addRegionModal" tabindex="-1" aria-labelledby="addRegionModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addRegionModalLabel">Add Region</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="add-region-form">
+                                            <!-- Region Code -->
+                                            <div class="mb-3">
+                                                <label for="add-region-code" class="form-label">Region Code</label>
+                                                <input type="text" class="form-control" id="add-region-code" required>
+                                            </div>
+
+                                            <!-- Region Name -->
+                                            <div class="mb-3">
+                                                <label for="add-region-name" class="form-label">Region Name</label>
+                                                <input type="text" class="form-control" id="add-region-name" required>
+                                            </div>
+
+                                            <!-- Region Status -->
+                                            <div class="mb-3">
+                                                <label for="add-region-status" class="form-label">Status</label>
+                                                <select class="form-select" id="add-region-status" required>
+                                                    <option value="active">Active</option>
+                                                    <option value="inactive">Inactive</option>
+                                                </select>
+                                            </div>
+
+                                            <!-- Country Dropdown -->
+                                            <div class="mb-3">
+                                                <label for="add-region-country" class="form-label">Country</label>
+                                                <select class="form-select" id="add-region-country" required>
+                                                    <!-- Options populated dynamically -->
+                                                </select>
+                                            </div>
+
+                                            <!-- Add Region Button -->
+                                            <button type="submit" class="btn btn-primary">Add Region</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Modal for Edit -->
+                        <div class="modal fade" id="editCountryModal" tabindex="-1" aria-labelledby="editCountryModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editCountryModalLabel">Edit Country</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="edit-country-form">
+                                            <div class="mb-3" style="display: none;">
+                                                <label for="edit-country-id" class="form-label">Country id</label>
+                                                <input type="text" class="form-control" id="edit-country-id" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="edit-country-name" class="form-label">Country Name</label>
+                                                <input type="text" class="form-control" id="edit-country-name" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="edit-country-code" class="form-label">Country Code</label>
+                                                <input type="text" class="form-control" id="edit-country-code" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="edit-currency-iso-code" class="form-label">Currency ISO Code</label>
+                                                <input type="text" class="form-control" id="edit-currency-iso-code">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="edit-iso-code" class="form-label">ISO Code</label>
+                                                <input type="text" class="form-control" id="edit-iso-code">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="edit-status" class="form-label">Status</label>
+                                                <select class="form-select" id="edit-status">
+                                                    <option value="active">Active</option>
+                                                    <option value="inactive">Inactive</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="edit-continent-id" class="form-label">Continent ID</label>
+                                                <input type="number" class="form-control" id="edit-continent-id">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="edit-country-image" class="form-label">Country Image</label>
+                                                <input type="text" class="form-control" id="edit-country-image">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="edit-currency-symbol" class="form-label">Currency Symbol</label>
+                                                <input type="text" class="form-control" id="edit-currency-symbol">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="edit-default-country" class="form-label">Default Country</label>
+                                                <select class="form-select" id="edit-default-country">
+                                                    <option value="Y">Yes</option>
+                                                    <option value="N">No</option>
+                                                </select>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="addDistrictModal" tabindex="-1" aria-labelledby="addDistrictModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addDistrictModalLabel">Add District</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="add-district-form">
+                                            <!-- District Name -->
+                                            <div class="mb-3">
+                                                <label for="add-district-name" class="form-label">District Name</label>
+                                                <input type="text" class="form-control" id="add-district-name" required>
+                                            </div>
+
+                                            <!-- District Status -->
+                                            <div class="mb-3">
+                                                <label for="add-district-status" class="form-label">Status</label>
+                                                <select class="form-select" id="add-district-status" required>
+                                                    <option value="active">Active</option>
+                                                    <option value="inactive">Inactive</option>
+                                                </select>
+                                            </div>
+
+                                            <!-- County Dropdown -->
+                                            <div class="mb-3">
+                                                <label for="add-district-county" class="form-label">County</label>
+                                                <select class="form-select" id="add-district-county" required>
+                                                    <!-- Options populated dynamically -->
+                                                </select>
+                                            </div>
+
+                                            <!-- Add District Button -->
+                                            <button type="submit" class="btn btn-primary">Add District</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="content-backdrop fade"></div>
+                    </div>
+                    <!-- Content wrapper -->
+                </div>
+                <!-- / Layout page -->
+            </div>
+
+            <!-- Overlay -->
+            <div class="layout-overlay layout-menu-toggle"></div>
+
+            <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+            <div class="drag-target"></div>
+        </div>
+
+    </div>
+
+
+</div>
+<!-- / Layout wrapper -->
+
+
+<script>
+    function showCountryTable() {
+        document.getElementById('country-table-section').style.display = 'block';
+        document.getElementById('region-table-section').style.display = 'none';
+        // Add similar lines for other sections
+        document.getElementById('county-table-section').style.display = 'none';
+        document.getElementById('district-table-section').style.display = 'none';
+    }
+
+
+</script>
+
+<script>
+
+    function showCommunityDistrictTable() {
+        document.getElementById('district-table-section').style.display = 'block';
+        document.getElementById('country-table-section').style.display = 'none';
+        document.getElementById('region-table-section').style.display = 'none';
+        document.getElementById('county-table-section').style.display = 'none';
+        renderDistrictTable(currentDistrictPage);
+    }
+
+    function showLgaProvinceTable() {
+        document.getElementById('county-table-section').style.display = 'block';
+        document.getElementById('country-table-section').style.display = 'none';
+        document.getElementById('region-table-section').style.display = 'none';
+        document.getElementById('district-table-section').style.display = 'none';
+        renderCountyTable(countyCurrentPage);
+    }
+
+    let countries = []; // Store all fetched countries
+    let currentPage = 1;
+    const rowsPerPage = 10;
+
+    // Fetch countries data and render the first page
+    document.addEventListener('DOMContentLoaded', function () {
+        fetchCountries();
+        fetchRegions();
+        fetchCounties();
+        fetchDistricts();
+    });
+
+    function fetchCountries() {
+        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+        const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+        fetch('/api/countries', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                [csrfHeader]: csrfToken
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                countries = data; // Store the fetched data
+                renderTable(currentPage); // Render the first page
+            })
+            .catch(error => console.error('Error fetching countries:', error));
+    }
+
+    function renderTable(page) {
+        const tableBody = document.getElementById('country-table-body');
+        tableBody.innerHTML = ''; // Clear any existing rows
+
+        // Calculate start and end index for the current page
+        const startIndex = (page - 1) * rowsPerPage;
+        const endIndex = startIndex + rowsPerPage;
+        const pageCountries = countries.slice(startIndex, endIndex); // Get countries for the current page
+
+        // Render rows for the current page
+        pageCountries.forEach(country => {
+            const row = `
+            <tr>
+                <td>${country.countryId}</td>
+                <td>${country.countryCode}</td>
+                <td>${country.countryName}</td>
+                <td>${country.currencyIsoCode}</td>
+                <td>${country.isoCode}</td>
+                <td>${country.status}</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-secondary dropdown-toggle no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="ti ti-dots-vertical"></i>
+                        </button>
+                       <ul class="dropdown-menu">
+                            <li><a class="dropdown-item edit-btn" href="#" data-id="${country.countryId}">Edit</a></li>
+                            <li><a class="dropdown-item delete-btn" href="#" data-id="${country.countryId}">Delete</a></li>
+                        </ul>
+
+                    </div>
+                </td>
+            </tr>
+        `;
+            tableBody.insertAdjacentHTML('beforeend', row);
+        });
+
+        // Update pagination info
+        updatePaginationInfo();
+        attachEventListeners();
+    }
+
+    function attachEventListeners() {
+        // Attach Edit button event listeners
+        document.querySelectorAll('.edit-btn').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                const countryId = this.getAttribute('data-id');
+                const country = countries.find(c => c.countryId == countryId);
+                showEditModal(country);
+            });
+        });
+
+        // Attach Delete button event listeners
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                const countryId = this.getAttribute('data-id');
+                if (confirm('Are you sure you want to delete this country?')) {
+                    deleteCountry(countryId);
+                }
+            });
+        });
+    }
+
+    function showEditModal(country) {
+        document.getElementById('edit-country-id').value = country.countryId;
+        document.getElementById('edit-country-name').value = country.countryName;
+        document.getElementById('edit-country-code').value = country.countryCode;
+        document.getElementById('edit-currency-iso-code').value = country.currencyIsoCode || '';
+        document.getElementById('edit-iso-code').value = country.isoCode || '';
+        document.getElementById('edit-status').value = country.status || 'inactive';
+        document.getElementById('edit-continent-id').value = country.continentId || '';
+        document.getElementById('edit-country-image').value = country.countryImage || '';
+        document.getElementById('edit-currency-symbol').value = country.currencySymbol || '';
+        document.getElementById('edit-default-country').value = country.defaultCountry || 'N';
+
+        const editModal = new bootstrap.Modal(document.getElementById('editCountryModal'));
+        editModal.show();
+    }
+
+
+    document.getElementById('edit-country-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+        const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+        const updatedCountry = {
+            countryId: document.getElementById('edit-country-id').value,
+            countryName: document.getElementById('edit-country-name').value,
+            countryCode: document.getElementById('edit-country-code').value,
+            currencyIsoCode: document.getElementById('edit-currency-iso-code').value,
+            isoCode: document.getElementById('edit-iso-code').value,
+            status: document.getElementById('edit-status').value,
+            continentId: document.getElementById('edit-continent-id').value,
+            countryImage: document.getElementById('edit-country-image').value,
+            currencySymbol: document.getElementById('edit-currency-symbol').value,
+            defaultCountry: document.getElementById('edit-default-country').value,
+        };
+
+        fetch(`/api/countries/${updatedCountry.countryId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                [csrfHeader]: csrfToken
+            },
+            body: JSON.stringify(updatedCountry)
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('Country updated successfully!');
+                    // Update local data
+                    const countryIndex = countries.findIndex(c => c.countryId == updatedCountry.countryId);
+                    countries[countryIndex] = { ...countries[countryIndex], ...updatedCountry };
+                    renderTable(currentPage);
+                    const editModal = bootstrap.Modal.getInstance(document.getElementById('editCountryModal'));
+                    editModal.hide();
+                } else {
+                    alert('Failed to update country.');
+                }
+            })
+            .catch(error => console.error('Error updating country:', error));
+    });
+
+
+    // Delete a country
+    function deleteCountry(countryId) {
+        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+        const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+        fetch(`/api/countries/${countryId}`, {
+            method: 'DELETE',
+            headers: {
+                [csrfHeader]: csrfToken
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('Country deleted successfully!');
+                    // Update local data
+                    countries = countries.filter(c => c.countryId != countryId);
+                    renderTable(currentPage);
+                } else {
+                    alert('Failed to delete country.');
+                }
+            })
+            .catch(error => console.error('Error deleting country:', error));
+    }
+
+    function updatePaginationInfo() {
+        const totalPages = Math.ceil(countries.length / rowsPerPage);
+        const pageInfo = document.getElementById('page-info');
+        pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+
+        // Enable/disable pagination buttons
+        document.getElementById('prev-page').disabled = currentPage === 1;
+        document.getElementById('next-page').disabled = currentPage === totalPages;
+    }
+
+    // Event listeners for pagination buttons
+    document.getElementById('prev-page').addEventListener('click', function () {
+        if (currentPage > 1) {
+            currentPage--;
+            renderTable(currentPage);
+        }
+    });
+
+    document.getElementById('next-page').addEventListener('click', function () {
+        const totalPages = Math.ceil(countries.length / rowsPerPage);
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderTable(currentPage);
+        }
+    });
+
+
+
+    let regions = []; // Store all fetched regions
+    let currentRegionPage = 1;
+
+
+    function showRegionTable() {
+        document.getElementById('region-table-section').style.display = 'block';
+        document.getElementById('country-table-section').style.display = 'none';
+        document.getElementById('county-table-section').style.display = 'none';
+        document.getElementById('district-table-section').style.display = 'none';
+
+        // Optionally fetch regions if not already fetched
+        if (regions.length === 0) {
+            fetchRegions(); // Ensure this function is defined to fetch region data
+        }
+    }
+
+    function fetchRegions() {
+        fetch('/api/regions')
+            .then(response => response.json())
+            .then(data => {
+                regions = data; // Store fetched data
+                renderRegionTable(currentRegionPage); // Render the first page
+                populateCountriesDropdown(); // Populate countries in the edit modal dropdown
+            })
+            .catch(error => console.error('Error fetching regions:', error));
+    }
+
+    function renderRegionTable(page) {
+        const tableBody = document.getElementById('region-table-body');
+        tableBody.innerHTML = ''; // Clear existing rows
+
+        const startIndex = (page - 1) * rowsPerPage;
+        const endIndex = startIndex + rowsPerPage;
+        const pageRegions = regions.slice(startIndex, endIndex); // Get regions for the current page
+
+        pageRegions.forEach(region => {
+            const country = countries.find(c => c.countryId === region.countryId); // Match country
+            const countryName = country ? country.countryName : 'Unknown';
+
+            const row = `
+            <tr>
+                <td>${region.regionId}</td>
+                <td>${region.regionCode}</td>
+                <td>${region.regionName}</td>
+                <td>${region.status}</td>
+                <td>${countryName}</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-secondary dropdown-toggle no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="ti ti-dots-vertical"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item edit-region-btn" href="#" data-id="${region.regionId}">Edit</a></li>
+                            <li><a class="dropdown-item delete-region-btn" href="#" data-id="${region.regionId}">Delete</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        `;
+            tableBody.insertAdjacentHTML('beforeend', row);
+        });
+
+        updateRegionPaginationInfo();
+        attachRegionEventListeners();
+    }
+
+
+    function attachRegionEventListeners() {
+        document.querySelectorAll('.edit-region-btn').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                const regionId = this.getAttribute('data-id');
+                const region = regions.find(r => r.regionId == regionId);
+                showEditRegionModal(region);
+            });
+        });
+
+        document.querySelectorAll('.delete-region-btn').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                const regionId = this.getAttribute('data-id');
+                if (confirm('Are you sure you want to delete this region?')) {
+                    deleteRegion(regionId);
+                }
+            });
+        });
+    }
+
+    function showEditRegionModal(region) {
+        // Populate region details
+        document.getElementById('edit-region-id').value = region.regionId;
+        document.getElementById('edit-region-code').value = region.regionCode || '';
+        document.getElementById('edit-region-name').value = region.regionName || '';
+        document.getElementById('edit-region-status').value = region.status || 'inactive';
+
+        // Populate country dropdown
+        const countryDropdown = document.getElementById('edit-region-country');
+        countryDropdown.innerHTML = ''; // Clear existing options
+        countries.forEach(country => {
+            const isSelected = country.countryId === region.countryId ? 'selected' : '';
+            const option = `<option value="${country.countryId}" ${isSelected}>${country.countryName}</option>`;
+            countryDropdown.insertAdjacentHTML('beforeend', option);
+        });
+
+        // Show the modal
+        const editModal = new bootstrap.Modal(document.getElementById('editRegionModal'));
+        editModal.show();
+    }
+
+
+
+    function populateCountriesDropdown() {
+        fetch('/api/countries')
+            .then(response => response.json())
+            .then(countries => {
+                const countryDropdown = document.getElementById('edit-region-country');
+                countryDropdown.innerHTML = ''; // Clear existing options
+
+                countries.forEach(country => {
+                    const option = `<option value="${country.countryId}">${country.countryName}</option>`;
+                    countryDropdown.insertAdjacentHTML('beforeend', option);
+                });
+            })
+            .catch(error => console.error('Error fetching countries:', error));
+    }
+
+    function deleteRegion(regionId) {
+        fetch(`/api/regions/${regionId}`, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('Region deleted successfully!');
+                    regions = regions.filter(r => r.regionId != regionId);
+                    renderRegionTable(currentRegionPage);
+                } else {
+                    alert('Failed to delete region.');
+                }
+            })
+            .catch(error => console.error('Error deleting region:', error));
+    }
+
+    document.getElementById('edit-region-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const updatedRegion = {
+            regionId: document.getElementById('edit-region-id').value,
+            regionCode: document.getElementById('edit-region-code').value,
+            regionName: document.getElementById('edit-region-name').value,
+            status: document.getElementById('edit-region-status').value,
+            countryId: document.getElementById('edit-region-country').value // Get selected country
+        };
+
+        fetch(`/api/regions/${updatedRegion.regionId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedRegion)
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('Region updated successfully!');
+                    const regionIndex = regions.findIndex(r => r.regionId == updatedRegion.regionId);
+                    regions[regionIndex] = { ...regions[regionIndex], ...updatedRegion };
+                    // Find the updated country name
+                    const updatedCountry = countries.find(country => country.countryId == updatedRegion.countryId);
+                    if (updatedCountry) {
+                        regions[regionIndex].countryName = updatedCountry.countryName;
+                    } else {
+                        regions[regionIndex].countryName = 'Unknown'; // Fallback if country not found
+                    }
+
+                    renderRegionTable(currentRegionPage);
+
+                    const editModal = bootstrap.Modal.getInstance(document.getElementById('editRegionModal'));
+                    editModal.hide();
+                } else {
+                    alert('Failed to update region.');
+                }
+            })
+            .catch(error => console.error('Error updating region:', error));
+    });
+
+
+    function updateRegionPaginationInfo() {
+        const totalPages = Math.ceil(regions.length / rowsPerPage);
+        const pageInfo = document.getElementById('region-page-info');
+        pageInfo.textContent = `Page ${currentRegionPage} of ${totalPages}`;
+
+        document.getElementById('prev-region-page').disabled = currentRegionPage === 1;
+        document.getElementById('next-region-page').disabled = currentRegionPage === totalPages;
+    }
+
+    document.getElementById('prev-region-page').addEventListener('click', function () {
+        if (currentRegionPage > 1) {
+            currentRegionPage--;
+            renderRegionTable(currentRegionPage);
+        }
+    });
+
+    document.getElementById('next-region-page').addEventListener('click', function () {
+        const totalPages = Math.ceil(regions.length / rowsPerPage);
+        if (currentRegionPage < totalPages) {
+            currentRegionPage++;
+            renderRegionTable(currentRegionPage);
+        }
+    });
+
+    let counties = [];
+    let countyCurrentPage = 1;
+    const countyRowsPerPage = 10;
+
+    // Fetch counties data
+    function fetchCounties() {
+        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+        const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+        fetch('/api/counties', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                [csrfHeader]: csrfToken
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                counties = data; // Store fetched data
+                //renderCountyTable(countyCurrentPage); // Render first page
+            })
+            .catch(error => console.error('Error fetching counties:', error));
+    }
+
+
+
+    // Render counties table
+    function renderCountyTable(page) {
+        const tableBody = document.getElementById('county-table-body');
+        tableBody.innerHTML = ''; // Clear any existing rows
+
+
+
+        const startIndex = (page - 1) * countyRowsPerPage;
+        const endIndex = startIndex + countyRowsPerPage;
+        const pageCounties = counties.slice(startIndex, endIndex);
+
+        pageCounties.forEach(county => {
+            // Find the region and country names
+            const region = regions.find(r => r.regionId === county.regionId);
+            const country = countries.find(c => c.countryId === county.countryId);
+
+            const regionName = region ? region.regionName : 'Unknown';
+            const countryName = country ? country.countryName : 'Unknown';
+
+            const row = `
+            <tr>
+                <td>${county.countyId}</td>
+                <td>${county.countyName}</td>
+                <td>${county.status}</td>
+                <td>${regionName}</td>
+                <td>${countryName}</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-secondary dropdown-toggle no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="ti ti-dots-vertical"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item edit-county-btn" href="#" data-id="${county.countyId}">Edit</a></li>
+                            <li><a class="dropdown-item delete-county-btn" href="#" data-id="${county.countyId}">Delete</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        `;
+            tableBody.insertAdjacentHTML('beforeend', row);
+        });
+
+        updateCountyPagination();
+        attachCountyEventListeners();
+    }
+
+
+    // Attach edit and delete event listeners
+    function attachCountyEventListeners() {
+        document.querySelectorAll('.edit-county-btn').forEach(button => {
+            button.addEventListener('click', event => {
+                event.preventDefault();
+                const countyId = button.getAttribute('data-id');
+                const county = counties.find(c => c.countyId == countyId);
+                showEditCountyModal(county);
+            });
+        });
+
+        document.querySelectorAll('.delete-county-btn').forEach(button => {
+            button.addEventListener('click', event => {
+                event.preventDefault();
+                const countyId = button.getAttribute('data-id');
+                if (confirm('Are you sure you want to delete this county?')) {
+                    deleteCounty(countyId);
+                }
+            });
+        });
+    }
+
+
+
+    // Show edit modal
+    function showEditCountyModal(county) {
+        if (!county) {
+            console.error('County not found. Cannot populate the edit modal.');
+            return;
+        }
+
+        // Safely populate basic fields
+        const countyIdField = document.getElementById('edit-county-id');
+        if (countyIdField) countyIdField.value = county.countyId;
+
+        const countyNameField = document.getElementById('edit-county-name');
+        if (countyNameField) countyNameField.value = county.countyName;
+
+
+
+        const statusField = document.getElementById('edit-status');
+        if (statusField) statusField.value = county.status;
+
+
+        // Populate region dropdown
+        const regionDropdown = document.getElementById('edit-region-id');
+        if (regionDropdown) {
+            regionDropdown.innerHTML = '';
+            regions.forEach(region => {
+                // Normalize data types for comparison
+                const isSelected = parseInt(region.regionId) === parseInt(county.regionId) ? 'selected' : '';
+                const option = `<option value="${region.regionId}" ${isSelected}>${region.regionName}</option>`;
+                regionDropdown.insertAdjacentHTML('beforeend', option);
+            });
+        }
+
+        // Populate country dropdown
+        const countryDropdown = document.getElementById('edit-country-id');
+        if (countryDropdown) {
+            countryDropdown.innerHTML = '';
+            countries.forEach(country => {
+                // Normalize data types for comparison
+                const isSelected = parseInt(country.countryId) === parseInt(county.countryId) ? 'selected' : '';
+                const option = `<option value="${country.countryId}" ${isSelected}>${country.countryName}</option>`;
+                countryDropdown.insertAdjacentHTML('beforeend', option);
+            });
+        }
+
+
+        // Show the modal
+        const modal = new bootstrap.Modal(document.getElementById('editCountyModal'));
+        modal.show();
+    }
+
+
+
+    // Update pagination info
+    function updateCountyPagination() {
+        const totalPages = Math.ceil(counties.length / countyRowsPerPage);
+        const pageInfo = document.getElementById('county-page-info');
+        pageInfo.textContent = `Page ${countyCurrentPage} of ${totalPages}`;
+
+        document.getElementById('county-prev-page').disabled = countyCurrentPage === 1;
+        document.getElementById('county-next-page').disabled = countyCurrentPage === totalPages;
+    }
+
+    // Delete a county
+    function deleteCounty(countyId) {
+        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+        const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+        fetch(`/api/counties/${countyId}`, {
+            method: 'DELETE',
+            headers: {
+                [csrfHeader]: csrfToken
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('County deleted successfully!');
+                    counties = counties.filter(c => c.countyId != countyId);
+                    renderCountyTable(countyCurrentPage);
+                } else {
+                    alert('Failed to delete county.');
+                }
+            })
+            .catch(error => console.error('Error deleting county:', error));
+    }
+
+    // Event listener for pagination
+    document.getElementById('county-prev-page').addEventListener('click', function () {
+        if (countyCurrentPage > 1) {
+            countyCurrentPage--;
+            renderCountyTable(countyCurrentPage);
+        }
+    });
+
+    document.getElementById('county-next-page').addEventListener('click', function () {
+        const totalPages = Math.ceil(counties.length / countyRowsPerPage);
+        if (countyCurrentPage < totalPages) {
+            countyCurrentPage++;
+            renderCountyTable(countyCurrentPage);
+        }
+    });
+
+    function showEditCountyModal(county) {
+        if (!county) {
+            console.error('County not found. Cannot populate the edit modal.');
+            return;
+        }
+
+        // Safely populate basic fields
+        const countyIdField = document.getElementById('edit-county-id');
+        if (countyIdField) countyIdField.value = county.countyId;
+
+        const countyNameField = document.getElementById('edit-county-name');
+        if (countyNameField) countyNameField.value = county.countyName;
+
+        const statusField = document.getElementById('edit-county-status'); // Fixed status ID
+        if (statusField) statusField.value = county.status;
+
+        // Populate region dropdown
+        const regionDropdown = document.getElementById('edit-county-region'); // Fixed region ID
+        if (regionDropdown) {
+            regionDropdown.innerHTML = '';
+            regions.forEach(region => {
+                // Normalize data types for comparison
+                const isSelected = parseInt(region.regionId) === parseInt(county.regionId) ? 'selected' : '';
+                const option = `<option value="${region.regionId}" ${isSelected}>${region.regionName}</option>`;
+                regionDropdown.insertAdjacentHTML('beforeend', option);
+            });
+        }
+
+        // Populate country dropdown
+        const countryDropdown = document.getElementById('edit-county-country'); // Fixed country ID
+        if (countryDropdown) {
+            countryDropdown.innerHTML = '';
+            countries.forEach(country => {
+                // Normalize data types for comparison
+                const isSelected = parseInt(country.countryId) === parseInt(county.countryId) ? 'selected' : '';
+                const option = `<option value="${country.countryId}" ${isSelected}>${country.countryName}</option>`;
+                countryDropdown.insertAdjacentHTML('beforeend', option);
+            });
+        }
+
+        // Show the modal
+        const modal = new bootstrap.Modal(document.getElementById('editCountyModal'));
+        modal.show();
+    }
+
+    document.getElementById('edit-county-form').addEventListener('submit', event => {
+        event.preventDefault();
+
+        const updatedCounty = {
+            countyId: document.getElementById('edit-county-id').value,
+            countyName: document.getElementById('edit-county-name').value,
+            status: document.getElementById('edit-county-status').value,
+            regionId: parseInt(document.getElementById('edit-county-region').value), // Fixed region ID
+            countryId: parseInt(document.getElementById('edit-county-country').value) // Fixed country ID
+        };
+
+        fetch(`/api/counties/${updatedCounty.countyId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedCounty)
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('County updated successfully!');
+                    const countyIndex = counties.findIndex(c => c.countyId == updatedCounty.countyId);
+
+                    // Find updated region and country names
+                    const updatedRegion = regions.find(region => region.regionId === updatedCounty.regionId);
+                    const updatedCountry = countries.find(country => country.countryId === updatedCounty.countryId);
+
+                    // Update the county object in the list
+                    counties[countyIndex] = {
+                        ...counties[countyIndex],
+                        ...updatedCounty,
+                        regionName: updatedRegion ? updatedRegion.regionName : 'Unknown',
+                        countryName: updatedCountry ? updatedCountry.countryName : 'Unknown'
+                    };
+
+                    // Re-render the table
+                    renderCountyTable(countyCurrentPage);
+
+                    // Hide the modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('editCountyModal'));
+                    modal.hide();
+                } else {
+                    alert('Failed to update county.');
+                }
+            })
+            .catch(error => console.error('Error updating county:', error));
+    });
+
+
+    let districts = []; // Store all fetched districts
+    let currentDistrictPage = 1;
+
+
+
+
+    function fetchDistricts() {
+        fetch('/api/districts', {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        })
+            .then(response => response.json())
+            .then(data => {
+                districts = data; // Store the fetched data
+                renderDistrictTable(currentDistrictPage); // Render the first page
+            })
+            .catch(error => console.error('Error fetching districts:', error));
+    }
+
+    function renderDistrictTable(page) {
+        const tableBody = document.getElementById('district-table-body');
+        tableBody.innerHTML = ''; // Clear any existing rows
+
+        // Calculate start and end index for the current page
+        const startIndex = (page - 1) * rowsPerPage;
+        const endIndex = startIndex + rowsPerPage;
+        const pageDistricts = districts.slice(startIndex, endIndex); // Get districts for the current page
+
+        pageDistricts.forEach(district => {
+            // Find the associated county
+            const county = counties.find(c => c.countyId === district.countyId);
+            const countyName = county ? county.countyName : 'Unknown';
+
+            const row = `
+        <tr>
+            <td>${district.districtId}</td>
+            <td>${district.districtName}</td>
+            <td>${district.status}</td>
+            <td>${countyName}</td>
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-sm btn-secondary dropdown-toggle no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="ti ti-dots-vertical"></i>
+                    </button>
+                   <ul class="dropdown-menu">
+                        <li><a class="dropdown-item edit-btn" href="#" data-id="${district.districtId}">Edit</a></li>
+                        <li><a class="dropdown-item delete-btn" href="#" data-id="${district.districtId}">Delete</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    `;
+            tableBody.insertAdjacentHTML('beforeend', row);
+        });
+
+        // Update pagination info
+        updateDistrictPaginationInfo();
+        attachDistrictEventListeners();
+    }
+
+
+    function updateDistrictPaginationInfo() {
+        const totalPages = Math.ceil(districts.length / rowsPerPage);
+        const pageInfo = document.getElementById('page-info-districts');
+        pageInfo.textContent = `Page ${currentDistrictPage} of ${totalPages}`;
+
+        // Enable/disable pagination buttons
+        document.getElementById('prev-page-districts').disabled = currentDistrictPage === 1;
+        document.getElementById('next-page-districts').disabled = currentDistrictPage === totalPages;
+    }
+
+    function attachDistrictEventListeners() {
+        document.querySelectorAll('.edit-btn').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                const districtId = this.getAttribute('data-id');
+                const district = districts.find(d => d.districtId == districtId);
+                showEditDistrictModal(district);
+            });
+        });
+
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                const districtId = this.getAttribute('data-id');
+                if (confirm('Are you sure you want to delete this district?')) {
+                    deleteDistrict(districtId);
+                }
+            });
+        });
+    }
+
+    function showEditDistrictModal(district) {
+        document.getElementById('edit-district-id').value = district.districtId;
+        document.getElementById('edit-district-name').value = district.districtName;
+        document.getElementById('edit-district-status').value = district.status || 'inactive'; // Corrected ID
+
+        // Populate county dropdown
+        const countyDropdown = document.getElementById('edit-district-county'); // Corrected ID
+        countyDropdown.innerHTML = '';
+        counties.forEach(county => {
+            const isSelected = county.countyId === district.countyId ? 'selected' : '';
+            const option = `<option value="${county.countyId}" ${isSelected}>${county.countyName}</option>`;
+            countyDropdown.insertAdjacentHTML('beforeend', option);
+        });
+
+        const editModal = new bootstrap.Modal(document.getElementById('editDistrictModal'));
+        editModal.show();
+    }
+
+    document.getElementById('edit-district-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const updatedDistrict = {
+            districtId: parseInt(document.getElementById('edit-district-id').value),
+            districtName: document.getElementById('edit-district-name').value,
+            status: document.getElementById('edit-district-status').value, // Corrected ID
+            countyId: parseInt(document.getElementById('edit-district-county').value) // Corrected ID
+        };
+
+        fetch(`/api/districts/${updatedDistrict.districtId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updatedDistrict)
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('District updated successfully!');
+                    const districtIndex = districts.findIndex(d => d.districtId === updatedDistrict.districtId);
+
+                    // Update the district object in the list
+                    const updatedCounty = counties.find(c => c.countyId === updatedDistrict.countyId);
+                    districts[districtIndex] = {
+                        ...districts[districtIndex],
+                        ...updatedDistrict,
+                        countyName: updatedCounty ? updatedCounty.countyName : 'Unknown'
+                    };
+
+                    renderDistrictTable(currentDistrictPage);
+                    const editModal = bootstrap.Modal.getInstance(document.getElementById('editDistrictModal'));
+                    modal.hide();
+                } else {
+                    alert('Failed to update district.');
+                }
+            })
+            .catch(error => console.error('Error updating district:', error));
+    });
+
+
+    function deleteDistrict(districtId) {
+        fetch(`/api/districts/${districtId}`, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('District deleted successfully!');
+                    districts = districts.filter(d => d.districtId != districtId);
+                    renderDistrictTable(currentDistrictPage);
+                } else {
+                    alert('Failed to delete district.');
+                }
+            })
+            .catch(error => console.error('Error deleting district:', error));
+    }
+
+    document.getElementById('prev-page-districts').addEventListener('click', function () {
+        if (currentDistrictPage > 1) {
+            currentDistrictPage--;
+            renderDistrictTable(currentDistrictPage);
+        }
+    });
+
+    document.getElementById('next-page-districts').addEventListener('click', function () {
+        const totalPages = Math.ceil(districts.length / rowsPerPage);
+        if (currentDistrictPage < totalPages) {
+            currentDistrictPage++;
+            renderDistrictTable(currentDistrictPage);
+        }
+    });
+
+    document.getElementById('add-country-btn').addEventListener('click', function () {
+        const addModal = new bootstrap.Modal(document.getElementById('addCountryModal'));
+        addModal.show();
+    });
+
+    document.getElementById('add-country-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const newCountry = {
+            countryName: document.getElementById('add-country-name').value,
+            countryCode: document.getElementById('add-country-code').value,
+            currencyIsoCode: document.getElementById('add-country-currency-iso').value,
+            isoCode: document.getElementById('add-country-iso').value,
+            status: document.getElementById('add-country-status').value,
+            continentId: parseInt(document.getElementById('add-country-continent').value),
+            countryImage: document.getElementById('add-country-image').value,
+            currencySymbol: document.getElementById('add-country-currency-symbol').value,
+            defaultCountry: document.getElementById('add-country-default').value
+        };
+
+        fetch('/api/countries', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newCountry)
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('Country added successfully!');
+                    fetchCountries(); // Re-fetch the table data
+                    const addModal = bootstrap.Modal.getInstance(document.getElementById('addCountryModal'));
+                    addModal.hide();
+                } else {
+                    alert('Failed to add country.');
+                }
+            })
+            .catch(error => console.error('Error adding country:', error));
+    });
+
+    document.getElementById('add-region-btn').addEventListener('click', function () {
+        // Populate country dropdown in the modal
+        const countryDropdown = document.getElementById('add-region-country');
+        countryDropdown.innerHTML = '';
+        countries.forEach(country => {
+            const option = `<option value="${country.countryId}">${country.countryName}</option>`;
+            countryDropdown.insertAdjacentHTML('beforeend', option);
+        });
+
+        // Show the modal
+        const addModal = new bootstrap.Modal(document.getElementById('addRegionModal'));
+        addModal.show();
+    });
+
+
+    document.getElementById('add-region-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const newRegion = {
+            regionCode: document.getElementById('add-region-code').value,
+            regionName: document.getElementById('add-region-name').value,
+            status: document.getElementById('add-region-status').value,
+            countryId: parseInt(document.getElementById('add-region-country').value)
+        };
+
+        fetch('/api/regions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newRegion)
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('Region added successfully!');
+                    fetchRegions(); // Re-fetch regions and re-render the table
+                    const addModal = bootstrap.Modal.getInstance(document.getElementById('addRegionModal'));
+                    addModal.hide();
+                } else {
+                    alert('Failed to add region.');
+                }
+            })
+            .catch(error => console.error('Error adding region:', error));
+    });
+
+    document.getElementById('add-county-btn').addEventListener('click', function () {
+        // Populate country dropdown in the modal
+        const countryDropdown = document.getElementById('add-county-country');
+        countryDropdown.innerHTML = '';
+        countries.forEach(country => {
+            const option = `<option value="${country.countryId}">${country.countryName}</option>`;
+            countryDropdown.insertAdjacentHTML('beforeend', option);
+        });
+
+        // Populate region dropdown in the modal
+        const regionDropdown = document.getElementById('add-county-region');
+        regionDropdown.innerHTML = '';
+        regions.forEach(region => {
+            const option = `<option value="${region.regionId}">${region.regionName}</option>`;
+            regionDropdown.insertAdjacentHTML('beforeend', option);
+        });
+
+        // Show the modal
+        const addModal = new bootstrap.Modal(document.getElementById('addCountyModal'));
+        addModal.show();
+    });
+
+    document.getElementById('add-county-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const newCounty = {
+            countyName: document.getElementById('add-county-name').value,
+            status: document.getElementById('add-county-status').value,
+            regionId: parseInt(document.getElementById('add-county-region').value),
+            countryId: parseInt(document.getElementById('add-county-country').value)
+        };
+
+        fetch('/api/counties', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newCounty)
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('County added successfully!');
+                    fetchCounties(); // Re-fetch counties and re-render the table
+                    const addModal = bootstrap.Modal.getInstance(document.getElementById('addCountyModal'));
+                    addModal.hide();
+                } else {
+                    alert('Failed to add county.');
+                }
+            })
+            .catch(error => console.error('Error adding county:', error));
+    });
+
+    document.getElementById('add-district-btn').addEventListener('click', function () {
+        // Populate county dropdown in the modal
+        const countyDropdown = document.getElementById('add-district-county');
+        countyDropdown.innerHTML = '';
+        counties.forEach(county => {
+            const option = `<option value="${county.countyId}">${county.countyName}</option>`;
+            countyDropdown.insertAdjacentHTML('beforeend', option);
+        });
+
+        // Show the modal
+        const addModal = new bootstrap.Modal(document.getElementById('addDistrictModal'));
+        addModal.show();
+    });
+
+    document.getElementById('add-district-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const newDistrict = {
+            districtName: document.getElementById('add-district-name').value,
+            status: document.getElementById('add-district-status').value,
+            countyId: parseInt(document.getElementById('add-district-county').value)
+        };
+
+        fetch('/api/districts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newDistrict)
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('District added successfully!');
+                    fetchDistricts(); // Re-fetch districts and re-render the table
+                    const addModal = bootstrap.Modal.getInstance(document.getElementById('addDistrictModal'));
+                    addModal.hide();
+                } else {
+                    alert('Failed to add district.');
+                }
+            })
+            .catch(error => console.error('Error adding district:', error));
+    });
+
+
+    function showUserTable(role) {
+        document.getElementById('user-table-section').style.display = 'block';
+        document.getElementById('country-table-section').style.display = 'none';
+        document.getElementById('region-table-section').style.display = 'none';
+        document.getElementById('district-table-section').style.display = 'none';
+        document.getElementById('county-table-section').style.display = 'none';
+        document.getElementById('category-table-section').style.display = 'none';
+        fetchUsersByRole(role);
+    }
+
+    function fetchUsersByRole(role) {
+        fetch(`/api/users?role=${role}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        })
+            .then(response => response.json())
+            .then(data => renderUserTable(data))
+            .catch(error => console.error('Error fetching users:', error));
+    }
+
+    function renderUserTable(users) {
+        const tableBody = document.getElementById('user-table-body');
+        tableBody.innerHTML = ''; // Clear existing rows
+
+        users.forEach(user => {
+            const row = `
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <img src="${user.profilePicture || '/default-profile.png'}" alt="Profile Picture" class="rounded-circle me-2" width="40" height="40">
+                        <div>
+                            <strong>${user.firstName} ${user.lastName}</strong><br>
+                            <small>${user.email}</small>
+                        </div>
+                    </div>
+                </td>
+                <td>${user.role}</td>
+                <td>${user.phoneNumber}</td>
+                <td>${user.assignedLocations || 'N/A'}</td>
+                <td>${user.address || 'N/A'}</td>
+                <td>${new Date(user.createdAt).toLocaleDateString()}</td>
+                <td>${user.status}</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-secondary dropdown-toggle no-caret" type="button" data-bs-toggle="dropdown">
+                            <i class="ti ti-dots-vertical"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Edit</a></li>
+                            <li><a class="dropdown-item" href="#">Delete</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        `;
+            tableBody.insertAdjacentHTML('beforeend', row);
+        });
+    }
+
+    let categories = [];
+    const categoryRowsPerPage = 10;
+    let currentCategoryPage = 1;
+
+    function showCategoryTable() {
+        // Hide other sections
+        document.getElementById('country-table-section').style.display = 'none';
+        document.getElementById('region-table-section').style.display = 'none';
+        document.getElementById('district-table-section').style.display = 'none';
+        document.getElementById('county-table-section').style.display = 'none';
+        // Show the category table section
+        document.getElementById('category-table-section').style.display = 'block';
+
+        // Optionally, fetch the category data if needed
+        fetchCategories();
+    }
+
+
+    // Fetch categories
+    function fetchCategories() {
+        fetch('/api/categories')
+            .then(response => response.json())
+            .then(data => {
+                categories = data;
+                renderCategoryTable(currentCategoryPage);
+            })
+            .catch(error => console.error('Error fetching categories:', error));
+    }
+
+    // Render category table
+    function renderCategoryTable(page) {
+        const tableBody = document.getElementById('category-table-body');
+        tableBody.innerHTML = '';
+
+        const startIndex = (page - 1) * categoryRowsPerPage;
+        const endIndex = startIndex + categoryRowsPerPage;
+        const pageCategories = categories.slice(startIndex, endIndex);
+
+        pageCategories.forEach(category => {
+            const row = `
+            <tr>
+                <td>
+                    <img src="${category.logoUrl}" alt="Logo" style="width: 30px; height: 30px; margin-right: 10px;">
+                    ${category.name}
+                </td>
+                <td>${category.status}</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            Actions
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" onclick="suspendCategory(${category.id})">Suspend</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="deleteCategory(${category.id})">Delete</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        `;
+            tableBody.insertAdjacentHTML('beforeend', row);
+        });
+    }
+
+    function suspendCategory(categoryId) {
+        if (!confirm('Are you sure you want to suspend this category?')) {
+            return;
+        }
+
+        fetch(`/api/categories/${categoryId}/suspend`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('Category suspended successfully!');
+                    // Update the category list or re-fetch data from the server
+                    fetchCategories();
+                } else {
+                    alert('Failed to suspend category');
+                }
+            })
+            .catch(error => console.error('Error suspending category:', error));
+    }
+
+
+    function deleteCategory(categoryId) {
+        if (!confirm('Are you sure you want to delete this category? This action cannot be undone.')) {
+            return;
+        }
+
+        fetch(`/api/categories/${categoryId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('Category deleted successfully!');
+                    // Update the category list or re-fetch data from the server
+                    fetchCategories();
+                } else {
+                    alert('Failed to delete category. It may have dependencies.');
+                }
+            })
+            .catch(error => console.error('Error deleting category:', error));
+    }
+
+
+    // Add/Edit Category Modal
+    function showAddCategoryModal() {
+        document.getElementById('category-id').value = '';
+        document.getElementById('category-name').value = '';
+        document.getElementById('category-status').value = 'ACTIVE';
+        document.getElementById('category-logo').value = '';
+        new bootstrap.Modal(document.getElementById('addEditCategoryModal')).show();
+    }
+
+    document.getElementById('add-edit-category-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const categoryId = document.getElementById('category-id').value;
+        const categoryData = {
+            name: document.getElementById('category-name').value,
+            status: document.getElementById('category-status').value,
+            logoUrl: document.getElementById('category-logo').value
+        };
+
+        const url = categoryId ? `/api/categories/${categoryId}` : '/api/categories';
+        const method = categoryId ? 'PUT' : 'POST';
+
+        fetch(url, {
+            method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(categoryData)
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('Category saved successfully!');
+                    fetchCategories();
+                    bootstrap.Modal.getInstance(document.getElementById('addEditCategoryModal')).hide();
+                } else {
+                    alert('Error saving category!');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
+
+
+
+
+</script>
+
+
+<!-- Core JS -->
+<script th:src="@{/assets/vendor/libs/jquery/jquery.js}"></script>
+<script th:src="@{/assets/vendor/libs/popper/popper.js}"></script>
+<script th:src="@{/assets/vendor/js/bootstrap.js}"></script>
+<script th:src="@{/assets/vendor/libs/node-waves/node-waves.js}"></script>
+<script th:src="@{/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"></script>
+<script th:src="@{/assets/vendor/libs/hammer/hammer.js}"></script>
+<script th:src="@{/assets/vendor/libs/i18n/i18n.js}"></script>
+<script th:src="@{/assets/vendor/libs/typeahead-js/typeahead.js}"></script>
+<script th:src="@{/assets/vendor/js/menu.js}"></script>
+
+<!-- Vendors JS -->
+<script th:src="@{/assets/vendor/libs/apex-charts/apexcharts.js}"></script>
+<script th:src="@{/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js}"></script>
+
+<!-- Main JS -->
+<script th:src="@{/assets/js/main.js}"></script>
+
+<!-- Page JS -->
+<script th:src="@{/assets/js/app-ecommerce-dashboard.js}"></script>
+
+</body>
+</html>
+
+
+

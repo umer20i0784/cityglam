@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multi-Step Registration</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" th:href="@{/assets/img/favicon/favicon.ico}" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet" />
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" th:href="@{/assets/vendor/css/rtl/core.css}" />
+  <link rel="stylesheet" th:href="@{/assets/vendor/css/rtl/theme-default.css}" />
+  <link rel="stylesheet" th:href="@{/assets/css/demo.css}" />
+
+  <!-- Vendors CSS -->
+  <link rel="stylesheet" th:href="@{/assets/vendor/libs/select2/select2.css}" />
+  <link rel="stylesheet" th:href="@{/assets/vendor/libs/bootstrap-select/bootstrap-select.css}" />
+  <link rel="stylesheet" th:href="@{/assets/vendor/libs/bs-stepper/bs-stepper.css}" />
+  <link rel="stylesheet" th:href="@{/assets/vendor/libs/@form-validation/form-validation.css}" />
+
+  <!-- Page CSS -->
+  <link rel="stylesheet" th:href="@{/assets/vendor/css/pages/page-auth.css}" />
+
+  <!-- Helpers -->
+  <script th:src="@{/assets/vendor/js/helpers.js}"></script>
+  <script th:src="@{/assets/js/config.js}"></script>
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" th:href="@{/assets/img/favicon/favicon.ico}" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700&amp;display=swap" rel="stylesheet">
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" th:href="@{/assets/vendor/css/rtl/core.css}" class="template-customizer-core-css">
+  <link rel="stylesheet" th:href="@{/assets/vendor/css/rtl/theme-default.css}" class="template-customizer-theme-css">
+  <link rel="stylesheet" th:href="@{/assets/css/demo.css}">
+
+  <!-- Vendors CSS -->
+  <link rel="stylesheet" th:href="@{/assets/vendor/libs/node-waves/node-waves.css}">
+  <link rel="stylesheet" th:href="@{/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css}">
+  <link rel="stylesheet" th:href="@{/assets/vendor/libs/select2/select2.css}">
+  <link rel="stylesheet" th:href="@{/assets/vendor/libs/bootstrap-select/bootstrap-select.css}">
+
+  <!-- JS Helpers -->
+  <script th:src="@{/assets/vendor/js/helpers.js}"></script>
+  <script th:src="@{/assets/js/config.js}"></script>
+
+</head>
+<body>
+<!-- Content -->
+<div class="authentication-wrapper authentication-cover">
+  <div class="authentication-inner row">
+    <!-- Left Text -->
+    <div class="d-none d-lg-flex col-lg-4 align-items-center justify-content-center p-5 auth-cover-bg-color position-relative auth-multisteps-bg-height">
+      <img th:src="@{/assets/img/illustrations/auth-register-multisteps-illustration.png}" alt="auth-register-multisteps" class="img-fluid" width="280" />
+      <img
+              th:src="@{/assets/img/illustrations/auth-register-multisteps-shape-light.png}"
+              alt="auth-register-multisteps"
+              class="platform-bg"
+              data-app-light-img="@{/assets/img/illustrations/auth-register-multisteps-shape-light.png}"
+              data-app-dark-img="@{/assets/img/illustrations/auth-register-multisteps-shape-dark.png}" />
+    </div>
+    <!-- /Left Text -->
+    <!-- Multi-Step Form -->
+    <div class="col-lg-8 mx-auto p-4">
+      <form th:action="@{/register-multi-step}" method="post" id="multiStepForm">
+        <input type="hidden" name="email" th:value="${email}" />
+        <input type="hidden" name="password" th:value="${password}" />
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+        <!-- Step 1: Personal Details -->
+        <div class="step" id="step-1">
+          <h4>Personal Details</h4>
+          <div class="mb-3">
+            <label for="firstName" class="form-label">First Name*</label>
+            <input type="text" name="firstName" id="firstName" class="form-control" placeholder="Enter your first name" required />
+          </div>
+          <div class="mb-3">
+            <a href="#" id="addMiddleName" class="text-primary" onclick="toggleMiddleName()">+ Add middle name</a>
+            <div id="middleNameContainer" class="d-none">
+              <label for="middleName" class="form-label">Middle Name (Optional)</label>
+              <input type="text" name="middleName" id="middleName" class="form-control" placeholder="Enter your middle name" />
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="lastName" class="form-label">Last Name*</label>
+            <input type="text" name="lastName" id="lastName" class="form-control" placeholder="Enter your last name" required />
+          </div>
+          <button type="button" class="btn btn-primary" onclick="nextStep(2)">Continue</button>
+        </div>
+
+        <!-- Step 2: Location -->
+        <div class="step d-none" id="step-2">
+          <h4>Location</h4>
+          <div class="mb-3">
+            <!-- Country -->
+            <label for="country" class="form-label">Country</label>
+            <select id="country" name="country" class="form-select" onchange="fetchRegions(this.value)">
+              <option value="" disabled selected>Select your country</option>
+              <option th:each="country : ${countries}" th:value="${country.countryId}" th:text="${country.countryName}"></option>
+            </select>
+
+            <!-- State -->
+            <label for="state" class="form-label mt-3">State</label>
+            <select id="state" name="state" class="form-select" onchange="fetchCounties(this.value)">
+              <option value="" disabled selected>Select your state</option>
+            </select>
+
+            <!-- Region/LGA -->
+            <label for="region" class="form-label mt-3">Region/LGA</label>
+            <select id="region" name="region" class="form-select" onchange="fetchCities(this.value)">
+              <option value="" disabled selected>Select your region/LGA</option>
+            </select>
+
+            <!-- City/Town -->
+            <label for="city" class="form-label mt-3">City/Town</label>
+            <select id="city" name="city" class="form-select" onchange="showCityInput(this.value)">
+              <option value="" disabled selected>Select your city or town</option>
+              <option value="not-listed">My City/Town is not listed</option>
+            </select>
+            <input id="customCityInput" name="customCity" type="text" class="form-control mt-2" placeholder="Enter your city/town" style="display: none;" />
+
+            <!-- Address -->
+            <label for="address" class="form-label mt-3">Address</label>
+            <input id="address" name="address" type="text" class="form-control" placeholder="Enter your address" oninput="fetchGoogleSuggestions(this.value)" />
+            <ul id="addressSuggestions" class="list-group" style="display: none;"></ul>
+
+          </div>
+          <button type="button" class="btn btn-secondary" onclick="prevStep(1)">Previous</button>
+          <button type="button" class="btn btn-primary" onclick="nextStep(3)">Continue</button>
+        </div>
+
+        <!-- Step 3: Service Coverage -->
+        <div class="step d-none" id="step-3">
+          <h4>Service Coverage</h4>
+
+          <!-- Regions Selector -->
+          <div class="col-md-6 mb-6" style="background-color: white; border: 1px solid #ddd; border-radius: 4px; padding: 15px;">
+            <label for="select2Primary" class="form-label">Select Coverage Regions:</label>
+            <div class="select2-primary">
+              <select id="selectRegions" class="select2 form-select" multiple>
+                <!-- Options will be populated dynamically -->
+              </select>
+            </div>
+          </div>
+
+          <!-- Business Radio Buttons -->
+          <div class="mb-3">
+            <p>Are you a company or registered business?</p>
+            <input type="radio" id="isBusinessYes" name="isBusiness" value="yes" onclick="toggleBusinessFields(true)" />
+            <label for="isBusinessYes">Yes</label>
+            <input type="radio" id="isBusinessNo" name="isBusiness" value="no" onclick="toggleBusinessFields(false)" />
+            <label for="isBusinessNo">No</label>
+          </div>
+
+          <!-- Business Information Fields -->
+          <div id="businessInfo" class="d-none" style="margin-top: 15px; background-color: white; border: 1px solid #ddd; border-radius: 4px; padding: 15px;">
+            <div class="mb-3">
+              <label for="companyName" class="form-label">Company or Business Name</label>
+              <input type="text" name="companyName" id="companyName" class="form-control" placeholder="Enter your company name" />
+            </div>
+            <div class="mb-3">
+              <label for="businessNumber" class="form-label">Business Registration Number</label>
+              <input type="text" name="businessNumber" id="businessNumber" class="form-control" placeholder="Enter your business registration number" />
+            </div>
+            <div class="mb-3">
+              <label for="registrationCountry" class="form-label">Country of Registration</label>
+              <select name="registrationCountry" id="registrationCountry" class="form-control">
+                <!-- Add countries dynamically -->
+              </select>
+            </div>
+          </div>
+
+          <!-- Navigation Buttons -->
+          <button type="button" class="btn btn-secondary" onclick="prevStep(2)">Previous</button>
+          <button type="button" class="btn btn-primary" onclick="nextStep(4)">Continue</button>
+        </div>
+
+
+        <!-- Step 4: Mobile Number -->
+        <div class="step d-none" id="step-4">
+          <h4>Mobile Number</h4>
+          <div class="mb-3">
+            <label for="countryCode" class="form-label">Country Code</label>
+            <input
+                    type="text"
+                    name="countryCode"
+                    id="countryCode"
+                    class="form-control"
+                    placeholder="Enter your country code (e.g., +1)"
+                    required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="mobileNumber" class="form-label">Mobile Number</label>
+            <input type="text" name="mobileNumber" id="mobileNumber" class="form-control" placeholder="Enter your mobile number" />
+          </div>
+          <button type="button" class="btn btn-secondary" onclick="prevStep(3)">Previous</button>
+          <button type="submit" class="btn btn-success">Finish</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- JS -->
+<script th:src="@{/assets/vendor/libs/jquery/jquery.js}"></script>
+<script th:src="@{/assets/vendor/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/assets/vendor/libs/select2/select2.min.js}"></script>
+<script th:src="@{/assets/vendor/libs/bs-stepper/bs-stepper.min.js}"></script>
+<script>
+  function toggleMiddleName() {
+    document.getElementById('middleNameContainer').classList.toggle('d-none');
+  }
+
+  function nextStep(step) {
+    document.querySelectorAll('.step').forEach((el) => el.classList.add('d-none'));
+    document.getElementById(`step-${step}`).classList.remove('d-none');
+
+    // Initialize Step 3 if transitioning to it
+    if (step === 3) {
+      const selectedCountry = document.getElementById('country').value; // Assuming Step 2 has a country select dropdown with id `country`
+      if (selectedCountry) {
+        initStep3(selectedCountry); // Call `initStep3` with the selected country ID
+      } else {
+        console.error('No country selected in Step 2.');
+      }
+    }
+
+
+  }
+
+  function prevStep(step) {
+    document.querySelectorAll('.step').forEach((el) => el.classList.add('d-none'));
+    document.getElementById(`step-${step}`).classList.remove('d-none');
+  }
+
+  function fetchRegions(countryId) {
+    fetch(`/location/regions`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `countryId=${countryId}`
+    })
+            .then(response => response.json())
+            .then(data => {
+              const regionDropdown = document.getElementById("state");
+              regionDropdown.innerHTML = `<option value="" disabled selected>Select your state</option>`;
+              data.forEach(region => {
+                regionDropdown.innerHTML += `<option value="${region.regionId}">${region.regionName}</option>`;
+              });
+            });
+  }
+
+  function fetchCounties(regionId) {
+    fetch(`/location/counties`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `regionId=${regionId}`
+    })
+            .then(response => response.json())
+            .then(data => {
+              const countyDropdown = document.getElementById("region");
+              countyDropdown.innerHTML = `<option value="" disabled selected>Select your region/LGA</option>`;
+              data.forEach(county => {
+                countyDropdown.innerHTML += `<option value="${county.countyId}">${county.countyName}</option>`;
+              });
+            });
+  }
+
+  function fetchCities(countyId) {
+    fetch(`/location/districts`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `countyId=${countyId}`
+    })
+            .then(response => response.json())
+            .then(data => {
+              const cityDropdown = document.getElementById("city");
+              cityDropdown.innerHTML = `<option value="" disabled selected>Select your city or town</option>`;
+              data.forEach(district => {
+                cityDropdown.innerHTML += `<option value="${district.districtId}">${district.districtName}</option>`;
+              });
+              cityDropdown.innerHTML += `<option value="not-listed">My City/Town is not listed</option>`;
+            });
+  }
+
+  function showCityInput(value) {
+    const customCityInput = document.getElementById("customCityInput");
+    if (value === "not-listed") {
+      customCityInput.style.display = "block";
+    } else {
+      customCityInput.style.display = "none";
+    }
+  }
+
+  function fetchGoogleSuggestions(inputValue) {
+    if (inputValue.length > 2) {
+      fetch(`https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${inputValue}&key=YOUR_GOOGLE_API_KEY`)
+              .then(response => response.json())
+              .then(data => {
+                const suggestionsList = document.getElementById("addressSuggestions");
+                suggestionsList.innerHTML = "";
+                data.predictions.forEach(prediction => {
+                  const listItem = document.createElement("li");
+                  listItem.className = "list-group-item";
+                  listItem.innerText = prediction.description;
+                  listItem.onclick = () => selectAddress(prediction.description);
+                  suggestionsList.appendChild(listItem);
+                });
+                suggestionsList.style.display = "block";
+              });
+    }
+  }
+
+  function selectAddress(address) {
+    document.getElementById("address").value = address;
+    document.getElementById("addressSuggestions").style.display = "none";
+  }
+
+  // Fetch regions dynamically based on selected country from Step 2
+  function populateRegions(countryId) {
+          fetch(`/location/regions`, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `countryId=${countryId}`
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              const selectRegions = document.getElementById("selectRegions");
+              selectRegions.innerHTML = ""; // Clear existing options
+              data.forEach((region) => {
+                const option = document.createElement("option");
+                option.value = region.regionId;
+                option.textContent = region.regionName;
+                selectRegions.appendChild(option);
+              });
+            })
+            .catch((error) => console.error("Error fetching regions:", error));
+  }
+
+  // Toggle business fields
+  function toggleBusinessFields(show) {
+    const businessInfo = document.getElementById("businessInfo");
+    if (show) {
+      businessInfo.classList.remove("d-none");
+    } else {
+      businessInfo.classList.add("d-none");
+    }
+  }
+
+  // Populate countries for the "Country of Registration"
+  function populateCountries() {
+    fetch(`/location/countries`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+            .then((response) => response.json())
+            .then((data) => {
+              const registrationCountry = document.getElementById("registrationCountry");
+              registrationCountry.innerHTML = ""; // Clear existing options
+              data.forEach((country) => {
+                const option = document.createElement("option");
+                option.value = country.countryId;
+                option.textContent = country.countryName;
+                registrationCountry.appendChild(option);
+              });
+            })
+            .catch((error) => console.error("Error fetching countries:", error));
+  }
+
+  // Initialize step 3 on load
+  function initStep3(countryIdFromStep2) {
+    populateRegions(countryIdFromStep2); // Populate regions based on the selected country
+    populateCountries(); // Populate countries for registration
+  }
+
+  // Call `initStep3` with the country ID selected in Step 2
+
+
+
+</script>
+
+
+
+<!-- Core JS -->
+<script th:src="@{/assets/vendor/libs/jquery/jquery.js}"></script>
+<script th:src="@{/assets/vendor/libs/popper/popper.js}"></script>
+<script th:src="@{/assets/vendor/js/bootstrap.js}"></script>
+<script th:src="@{/assets/vendor/libs/node-waves/node-waves.js}"></script>
+<script th:src="@{/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"></script>
+<script th:src="@{/assets/vendor/libs/bs-stepper/bs-stepper.js}"></script>
+<script th:src="@{/assets/vendor/libs/select2/select2.js}"></script>
+<!-- Core JS -->
+<script th:src="@{/assets/vendor/libs/jquery/jquery.js}"></script>
+<script th:src="@{/assets/vendor/libs/popper/popper.js}"></script>
+<script th:src="@{/assets/vendor/js/bootstrap.js}"></script>
+<script th:src="@{/assets/vendor/libs/node-waves/node-waves.js}"></script>
+<script th:src="@{/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"></script>
+<script th:src="@{/assets/vendor/libs/hammer/hammer.js}"></script>
+<script th:src="@{/assets/vendor/libs/i18n/i18n.js}"></script>
+<script th:src="@{/assets/vendor/libs/typeahead-js/typeahead.js}"></script>
+<script th:src="@{/assets/vendor/js/menu.js}"></script>
+
+<!-- Vendors JS -->
+<script th:src="@{/assets/vendor/libs/select2/select2.js}"></script>
+<script th:src="@{/assets/vendor/libs/tagify/tagify.js}"></script>
+<script th:src="@{/assets/vendor/libs/bootstrap-select/bootstrap-select.js}"></script>
+<script th:src="@{/assets/vendor/libs/typeahead-js/typeahead.js}"></script>
+<script th:src="@{/assets/vendor/libs/bloodhound/bloodhound.js}"></script>
+
+<!-- Main JS -->
+<script th:src="@{/assets/js/main.js}"></script>
+<script th:src="@{/assets/js/forms-selects.js}"></script>
+</body>
+</html>
